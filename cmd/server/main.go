@@ -2,24 +2,38 @@ package main
 
 import (
 	"fmt"
+	"github.com/mm-go-rest-api/internal/comment"
 	"github.com/mm-go-rest-api/internal/db"
+	transportHttp "github.com/mm-go-rest-api/internal/transport/http"
 )
 
 func Run() error {
 	fmt.Println("Starting up the application...")
-	db,err := db.NewDatabase()
+	database,err := db.NewDatabase()
 
 	if err != nil {
 		fmt.Println("Failed to connect to the database")
 		return err
 	}
 
-	if err := db.MigrateBD(); err != nil {
+	if err := database.MigrateBD(); err != nil {
 		fmt.Println("failed to migrate database")
 		return err
 	}
 	fmt.Println("Successfully connected to the database")
-	fmt.Println(db)
+
+	cmtService := comment.NewService(database)
+
+	fmt.Println("cmtService: ", cmtService)
+
+	httpHandler := transportHttp.NewHandler(cmtService)
+
+	fmt.Println("httpHandler: ", httpHandler.Server)
+	if err := httpHandler.Serve(); err != nil {
+		return err
+	}
+
+	fmt.Println("After")
 	return nil
 }
 
