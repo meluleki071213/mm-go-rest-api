@@ -11,6 +11,9 @@ github.com/golang-migrate/migrate/v4/source/iofs
 # github.com/google/uuid v1.3.0
 ## explicit
 github.com/google/uuid
+# github.com/gorilla/mux v1.7.4
+## explicit
+github.com/gorilla/mux
 # github.com/hashicorp/errwrap v1.1.0
 github.com/hashicorp/errwrap
 # github.com/hashicorp/go-multierror v1.1.1
