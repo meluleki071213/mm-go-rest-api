@@ -24,16 +24,12 @@ func Run() error {
 
 	cmtService := comment.NewService(database)
 
-	fmt.Println("cmtService: ", cmtService)
-
 	httpHandler := transportHttp.NewHandler(cmtService)
 
-	fmt.Println("httpHandler: ", httpHandler.Server)
 	if err := httpHandler.Serve(); err != nil {
 		return err
 	}
 
-	fmt.Println("After")
 	return nil
 }
 
